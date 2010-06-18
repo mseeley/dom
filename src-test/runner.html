@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>dom unit tests</title>
+</head>
+<body>
+<script src="../src/dom.css.js"></script>
+<script src="../src/dom.frag.js"></script>
+
+<script src="res/log.js"></script>
+<script src="res/kaze.js"></script>
+<script src="test.dom.css.js"></script>
+<script src="test.dom.frag.js"></script>
+
+<script>
+(function () {
+
+  var pass = [],
+      fail = [],
+      filter = null,
+      loops = null;
+
+  kaze.run(function (n, p, e, l, r) {
+    // always display elapsed and average when multiple loops executed
+    if (l > 1) {
+      (p ? log : log.warn)(n, e + "ms", e / l + "avg");
+    }
+
+    (p ? pass : fail).push(n);
+
+    // display a summary when no tests remain
+    if (!r) {
+      log(pass.length, "passed.", fail.length, "failed.");
+      if (fail.length)
+        for (var i = 0; i < fail.length; i++)
+          log.warn("Failed:", fail[i])
+    }
+
+  }, filter, loops);
+
+})();
+</script>
+</body>
+</html>
